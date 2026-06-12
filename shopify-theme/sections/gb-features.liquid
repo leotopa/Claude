@@ -1,0 +1,79 @@
+{%- style -%}
+.gb-features { padding: 80px 0; background: #0D0D1A; }
+.gb-features__head { text-align: center; margin-bottom: 40px; }
+.gb-features__grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 16px;
+}
+@media (min-width: 640px) { .gb-features__grid { grid-template-columns: repeat(3,1fr); } }
+@media (min-width: 1024px) { .gb-features__grid { grid-template-columns: repeat(6,1fr); } }
+.gb-features__item {
+  background: #111120; border: 1px solid rgba(0,229,255,0.13);
+  border-radius: 12px; padding: 20px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.gb-features__icon {
+  width: 44px; height: 44px; background: rgba(0,229,255,0.12);
+  border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; font-size: 1.3rem;
+}
+.gb-features__title { font-size: .88rem; font-weight: 700; color: #fff; }
+.gb-features__desc { font-size: .75rem; color: #8A8AA8; line-height: 1.55; }
+{%- endstyle -%}
+
+<section class="gb-features">
+  <div class="page-width">
+    <div class="gb-features__head">
+      <div class="gb-section-label">{{ section.settings.label }}</div>
+      <h2 class="gb-section-title" style="color:#fff;">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="gb-features__grid">
+      {%- for block in section.blocks -%}
+        <div class="gb-features__item" {{ block.shopify_attributes }}>
+          <div class="gb-features__icon">{{ block.settings.icon }}</div>
+          <div class="gb-features__title">{{ block.settings.title }}</div>
+          {%- if block.settings.description != blank -%}
+            <div class="gb-features__desc">{{ block.settings.description }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GelBlasters — Features",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "O Que Inclui" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Tudo Pronto para Jogar" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji", "default": "⚡" },
+        { "type": "text", "id": "title", "label": "Título", "default": "Motor 7.4V" },
+        { "type": "text", "id": "description", "label": "Descrição", "default": "Motor elétrico de alta performance com modo semi e automático." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GelBlasters — Features",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "⚡", "title": "Motor 7.4V", "description": "Motor elétrico de alta performance com modo semi e automático." } },
+        { "type": "feature", "settings": { "icon": "🔋", "title": "Bateria Incluída", "description": "Bateria 7.4V Li-ion e cabo de carregamento já na caixa." } },
+        { "type": "feature", "settings": { "icon": "🎨", "title": "4 Cores", "description": "Vermelho, azul, verde e amarelo. Escolhe a que é tua." } },
+        { "type": "feature", "settings": { "icon": "📏", "title": "55×30cm", "description": "Tamanho real. Peso equilibrado. Confortável para jogar horas." } },
+        { "type": "feature", "settings": { "icon": "💧", "title": "Bolas de Gel", "description": "Biodegradáveis. Dissolvem-se em água. Sem manchas." } },
+        { "type": "feature", "settings": { "icon": "📦", "title": "Kit Completo", "description": "Funil, landmine bottle e magazine incluídos." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

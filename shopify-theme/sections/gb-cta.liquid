@@ -1,0 +1,66 @@
+{%- style -%}
+.gb-cta {
+  padding: 100px 0; text-align: center;
+  background: linear-gradient(135deg, rgba(0,229,255,.07), rgba(255,61,0,.05));
+  border-top: 1px solid rgba(0,229,255,0.13);
+  border-bottom: 1px solid rgba(0,229,255,0.13);
+}
+.gb-cta__urgency {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,61,0,.12); border: 1px solid rgba(255,61,0,.3);
+  border-radius: 4px; padding: 8px 16px; font-size: .8rem; font-weight: 700;
+  color: #FF3D00; margin-bottom: 28px; text-transform: uppercase; letter-spacing: .06em;
+}
+.gb-cta h2 {
+  font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 900; color: #fff; margin-bottom: 16px;
+}
+.gb-cta h2 span { color: #00E5FF; }
+.gb-cta p { font-size: 1rem; color: #8A8AA8; margin-bottom: 36px; }
+.gb-cta__actions {
+  display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+}
+{%- endstyle -%}
+
+<section class="gb-cta">
+  <div class="page-width">
+    {%- if section.settings.urgency_text != blank -%}
+      <div class="gb-cta__urgency">🔥 {{ section.settings.urgency_text }}</div>
+    {%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.description != blank -%}
+      <p>{{ section.settings.description }}</p>
+    {%- endif -%}
+    <div class="gb-cta__actions">
+      {%- if section.settings.cta_primary_label != blank -%}
+        <a href="{{ section.settings.cta_primary_url }}" class="gb-btn gb-btn-primary gb-btn-lg">
+          {{ section.settings.cta_primary_label }} →
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_label != blank -%}
+        <a href="{{ section.settings.cta_secondary_url }}" class="gb-btn gb-btn-ghost gb-btn-lg">
+          {{ section.settings.cta_secondary_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GelBlasters — CTA",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "urgency_text", "label": "Texto de urgência", "default": "Stock Limitado — Últimas Unidades Disponíveis" },
+    { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Garante o Teu <span>Agora.</span>" },
+    { "type": "text", "id": "description", "label": "Descrição", "default": "A partir de €29.99 com bateria e tudo incluído. Entrega em Portugal." },
+    { "type": "text", "id": "cta_primary_label", "label": "CTA Principal", "default": "Encomendar Agora" },
+    { "type": "url", "id": "cta_primary_url", "label": "CTA Principal — Link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "CTA Secundário", "default": "💬 WhatsApp" },
+    { "type": "url", "id": "cta_secondary_url", "label": "CTA Secundário — Link" }
+  ],
+  "presets": [
+    { "name": "GelBlasters — CTA" }
+  ]
+}
+{% endschema %}

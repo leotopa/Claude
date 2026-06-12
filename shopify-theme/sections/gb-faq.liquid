@@ -1,0 +1,89 @@
+{%- style -%}
+.gb-faq { padding: 80px 0; background: #09090F; }
+.gb-faq__head { text-align: center; margin-bottom: 40px; }
+.gb-faq__list { max-width: 720px; margin: 0 auto; }
+.gb-faq__item { border-bottom: 1px solid rgba(0,229,255,0.13); }
+.gb-faq__question {
+  width: 100%; background: none; border: none; color: #E8E8F0;
+  font-size: .95rem; font-weight: 600; text-align: left;
+  padding: 20px 0; display: flex; justify-content: space-between;
+  align-items: center; gap: 16px; cursor: pointer;
+  font-family: inherit; transition: color .2s;
+}
+.gb-faq__question:hover { color: #00E5FF; }
+.gb-faq__icon {
+  font-size: 1.1rem; color: #00E5FF; transition: transform .2s;
+  flex-shrink: 0; font-style: normal;
+}
+.gb-faq__item.open .gb-faq__icon { transform: rotate(45deg); }
+.gb-faq__answer {
+  font-size: .875rem; color: #8A8AA8; line-height: 1.7;
+  padding-bottom: 20px; display: none;
+}
+.gb-faq__item.open .gb-faq__answer { display: block; }
+{%- endstyle -%}
+
+<section class="gb-faq">
+  <div class="page-width">
+    <div class="gb-faq__head">
+      <div class="gb-section-label">{{ section.settings.label }}</div>
+      <h2 class="gb-section-title" style="color:#fff;">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="gb-faq__list">
+      {%- for block in section.blocks -%}
+        <div class="gb-faq__item" {{ block.shopify_attributes }}>
+          <button class="gb-faq__question">
+            {{ block.settings.question }}
+            <i class="gb-faq__icon">+</i>
+          </button>
+          <div class="gb-faq__answer">{{ block.settings.answer }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.gb-faq__question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = btn.closest('.gb-faq__item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.gb-faq__item.open').forEach(function(i) { i.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "GelBlasters — FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Dúvidas Frequentes" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Tens Perguntas?" }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "Pergunta / Resposta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pergunta", "default": "É seguro? Pode magoar?" },
+        { "type": "textarea", "id": "answer", "label": "Resposta", "default": "As bolas de gel têm 7-8mm e são macias. Causam uma sensação de toque ligeiro mas não magoam. Recomendamos óculos de proteção durante o jogo." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GelBlasters — FAQ",
+      "blocks": [
+        { "type": "faq_item", "settings": { "question": "É seguro? Pode magoar?", "answer": "As bolas de gel têm 7-8mm e são macias. Causam uma sensação de toque ligeiro mas não magoam. Recomendamos óculos de proteção durante o jogo, especialmente para crianças mais novas. Não é indicado para menores de 14 anos sem supervisão adulta." } },
+        { "type": "faq_item", "settings": { "question": "Quanto tempo demora a entrega em Portugal?", "answer": "A entrega demora entre 5 a 10 dias úteis para Portugal continental. Enviamos assim que o pagamento é confirmado. Recebes um email com o número de seguimento." } },
+        { "type": "faq_item", "settings": { "question": "O que vem na caixa?", "answer": "Todos os modelos incluem: Gel Blaster + Bateria 7.4V + Cabo carregador + Funil + Landmine bottle + Magazine. Os modelos M416 e MP5 incluem também silenciador." } },
+        { "type": "faq_item", "settings": { "question": "Como faço o pagamento por MB Way?", "answer": "No checkout, seleciona MB Way. Introduzes o teu número de telemóvel e recebes uma notificação na app MB Way para confirmar o pagamento. Rápido e seguro, direto do teu banco." } },
+        { "type": "faq_item", "settings": { "question": "Aceitam devoluções?", "answer": "Sim, tens 14 dias para devolver o produto no estado original. Se tiveres algum problema com o produto, contacta-nos primeiro via WhatsApp — resolvemos tudo rapidamente." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

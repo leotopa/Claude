@@ -1,0 +1,206 @@
+{%- style -%}
+.gb-hero {
+  min-height: calc(100vh - 64px);
+  display: flex; align-items: center;
+  padding: 80px 0; position: relative; overflow: hidden;
+  background: #09090F;
+}
+.gb-hero::before {
+  content: ''; position: absolute; top: -200px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(0,229,255,.09) 0%, transparent 65%);
+  pointer-events: none;
+}
+.gb-hero::after {
+  content: ''; position: absolute; bottom: -200px; left: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,61,0,.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+.gb-hero__inner {
+  position: relative; z-index: 1; width: 100%; max-width: 1200px;
+  margin: 0 auto; padding: 0 20px;
+  display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center;
+}
+@media (min-width: 900px) {
+  .gb-hero__inner { grid-template-columns: 1fr 1fr; }
+}
+.gb-hero__kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #00E5FF; margin-bottom: 16px;
+}
+.gb-hero__kicker::before {
+  content: ''; display: inline-block; width: 20px; height: 2px; background: #00E5FF;
+}
+.gb-hero__title {
+  font-size: clamp(2.2rem,6vw,4rem); font-weight: 900; line-height: 1.05;
+  margin-bottom: 20px; color: #fff;
+}
+.gb-hero__title .c { color: #00E5FF; }
+.gb-hero__title .o { color: #FF3D00; }
+.gb-hero__desc {
+  font-size: 1.05rem; color: #8A8AA8; margin-bottom: 32px;
+  max-width: 480px; line-height: 1.7;
+}
+.gb-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+.gb-hero__trust { display: flex; flex-wrap: wrap; gap: 16px; }
+.gb-hero__trust-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .78rem; color: #8A8AA8;
+}
+.gb-hero__visual { display: flex; justify-content: center; }
+.gb-hero__img-wrap {
+  position: relative; max-width: 500px; width: 100%;
+  background: #fff; border-radius: 16px; padding: 24px;
+  border: 1px solid rgba(0,229,255,.15);
+  box-shadow: 0 0 60px rgba(0,229,255,.1), 0 40px 80px rgba(0,0,0,.4);
+  overflow: hidden;
+}
+.gb-hero__img-wrap img { width: 100%; height: auto; object-fit: contain; }
+.gb-hero__glow-ring {
+  position: absolute; inset: -2px; border-radius: 18px;
+  background: linear-gradient(135deg, rgba(0,229,255,.3), transparent 50%, rgba(255,61,0,.15));
+  z-index: -1; pointer-events: none;
+}
+{%- endstyle -%}
+
+<section class="gb-hero">
+  <div class="gb-hero__inner">
+    <div class="gb-hero__text">
+      <div class="gb-hero__kicker">{{ section.settings.kicker }}</div>
+      <h1 class="gb-hero__title">
+        {{ section.settings.heading }}
+      </h1>
+      <p class="gb-hero__desc">{{ section.settings.description }}</p>
+      <div class="gb-hero__actions">
+        {%- if section.settings.cta_primary_label != blank -%}
+          <a href="{{ section.settings.cta_primary_url }}" class="gb-btn gb-btn-primary gb-btn-lg">
+            {{ section.settings.cta_primary_label }} →
+          </a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_label != blank -%}
+          <a href="{{ section.settings.cta_secondary_url }}" class="gb-btn gb-btn-ghost gb-btn-lg">
+            {{ section.settings.cta_secondary_label }}
+          </a>
+        {%- endif -%}
+      </div>
+      <div class="gb-hero__trust">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'trust_item' -%}
+            <div class="gb-hero__trust-item" {{ block.shopify_attributes }}>
+              <span>{{ block.settings.icon }}</span>
+              <span>{{ block.settings.text }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="gb-hero__visual">
+      <div class="gb-hero__img-wrap">
+        <div class="gb-hero__glow-ring"></div>
+        {%- if section.settings.hero_image != blank -%}
+          {{
+            section.settings.hero_image
+            | image_url: width: 900
+            | image_tag:
+              alt: section.settings.hero_image.alt,
+              loading: 'eager',
+              fetchpriority: 'high'
+          }}
+        {%- else -%}
+          <div style="aspect-ratio:4/3; background:linear-gradient(135deg,#0D0D1A,#111120); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+            <span style="font-size:4rem; opacity:.3;">🔫</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GelBlasters — Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker (linha de topo)",
+      "default": "Entrega em Portugal · Stock Disponível"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "default": "Gel Blasters <span class=\"c\">Elétricos</span> de <span class=\"o\">Nível Pro.</span>"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Descrição",
+      "default": "AK47, M416 e MP5 com motor 7.4V. Bolas de gel biodegradáveis, sem dor, pura adrenalina. Perfeito para jogar com os amigos."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "CTA Principal — Texto",
+      "default": "Escolhe o Teu Modelo"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "CTA Principal — Link"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "CTA Secundário — Texto",
+      "default": "Falar Connosco"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "CTA Secundário — Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagem do Produto (Hero)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji / Ícone",
+          "default": "🇵🇹"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Entrega PT"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GelBlasters — Hero",
+      "blocks": [
+        { "type": "trust_item", "settings": { "icon": "🇵🇹", "text": "Entrega PT" } },
+        { "type": "trust_item", "settings": { "icon": "⚡", "text": "Motor Elétrico" } },
+        { "type": "trust_item", "settings": { "icon": "🔋", "text": "Bateria Incluída" } },
+        { "type": "trust_item", "settings": { "icon": "📦", "text": "Tudo na Caixa" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

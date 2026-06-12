@@ -1,0 +1,93 @@
+{%- style -%}
+.gb-testimonials { padding: 80px 0; background: #0D0D1A; }
+.gb-testimonials__head { text-align: center; margin-bottom: 40px; }
+.gb-testimonials__grid {
+  display: grid; grid-template-columns: 1fr; gap: 20px;
+}
+@media (min-width: 640px) { .gb-testimonials__grid { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 900px) { .gb-testimonials__grid { grid-template-columns: repeat(3,1fr); } }
+.gb-testimonial-card {
+  background: #111120; border: 1px solid rgba(0,229,255,0.13);
+  border-radius: 12px; padding: 24px;
+}
+.gb-testimonial-stars { display: flex; gap: 2px; color: #FFB800; font-size: .9rem; margin-bottom: 12px; }
+.gb-testimonial-text {
+  font-size: .88rem; color: #E8E8F0; line-height: 1.65;
+  margin-bottom: 18px; font-style: italic;
+}
+.gb-testimonial-author { display: flex; align-items: center; gap: 10px; }
+.gb-testimonial-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(0,229,255,0.12); border: 2px solid #00E5FF;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; font-weight: 700; color: #00E5FF; flex-shrink: 0;
+  text-transform: uppercase;
+}
+.gb-testimonial-name { font-size: .85rem; font-weight: 700; color: #fff; }
+.gb-testimonial-meta { font-size: .74rem; color: #8A8AA8; }
+{%- endstyle -%}
+
+<section class="gb-testimonials">
+  <div class="page-width">
+    <div class="gb-testimonials__head">
+      <div class="gb-section-label">{{ section.settings.label }}</div>
+      <h2 class="gb-section-title" style="color:#fff;">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="gb-testimonials__grid">
+      {%- for block in section.blocks -%}
+        <div class="gb-testimonial-card" {{ block.shopify_attributes }}>
+          <div class="gb-testimonial-stars">
+            {%- assign stars = block.settings.rating | times: 1 -%}
+            {%- for i in (1..5) -%}
+              {%- if i <= stars -%}★{%- else -%}☆{%- endif -%}
+            {%- endfor -%}
+          </div>
+          <p class="gb-testimonial-text">"{{ block.settings.review }}"</p>
+          <div class="gb-testimonial-author">
+            <div class="gb-testimonial-avatar">
+              {{ block.settings.name | slice: 0, 1 }}{{ block.settings.name | split: ' ' | last | slice: 0, 1 }}
+            </div>
+            <div>
+              <div class="gb-testimonial-name">{{ block.settings.name }}</div>
+              <div class="gb-testimonial-meta">{{ block.settings.meta }}</div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GelBlasters — Testemunhos",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "O Que Dizem os Clientes" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Já Chegou a Portugal 🇵🇹" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Testemunho",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Estrelas", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "review", "label": "Texto da review", "default": "Produto incrível. Chegou rápido e meu filho adorou!" },
+        { "type": "text", "id": "name", "label": "Nome", "default": "João M." },
+        { "type": "text", "id": "meta", "label": "Info (cidade · modelo)", "default": "Porto · AK47 Vermelho" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GelBlasters — Testemunhos",
+      "blocks": [
+        { "type": "review", "settings": { "rating": 5, "review": "Chegou em menos de uma semana. O meu filho de 15 anos ficou maluco. Motor elétrico funciona mesmo bem. Bateria dura bastante.", "name": "João M.", "meta": "Porto · AK47 Vermelho" } },
+        { "type": "review", "settings": { "rating": 5, "review": "Comprei o M416 para jogar com os amigos. Já tivemos 3 partidas no jardim. Sem chatices, sem limpeza. Só diversão.", "name": "Tiago F.", "meta": "Lisboa · M416 Azul" } },
+        { "type": "review", "settings": { "rating": 4, "review": "O MP5 é incrível. Compacto mas dispara muito bem. Paguei por MB Way e foi tudo fácil. Recomendo mesmo.", "name": "Rodrigo C.", "meta": "Braga · MP5 Verde" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

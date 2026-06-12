@@ -1,0 +1,72 @@
+{%- style -%}
+.gb-trust-bar {
+  background: #00E5FF; padding: 11px 0; overflow: hidden;
+  white-space: nowrap;
+}
+.gb-trust-bar__track {
+  display: inline-flex; gap: 0;
+  animation: gb-marquee 22s linear infinite;
+}
+.gb-trust-bar__item {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .78rem; font-weight: 700;
+  color: #09090F; text-transform: uppercase;
+  letter-spacing: .08em; padding: 0 28px; flex-shrink: 0;
+}
+.gb-trust-bar__sep { opacity: .4; }
+@keyframes gb-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+{%- endstyle -%}
+
+<div class="gb-trust-bar">
+  <div class="gb-trust-bar__track">
+    {%- for block in section.blocks -%}
+      <span class="gb-trust-bar__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+      <span class="gb-trust-bar__item gb-trust-bar__sep">·</span>
+    {%- endfor -%}
+    {%- comment -%}Repeat for seamless loop{%- endcomment -%}
+    {%- for block in section.blocks -%}
+      <span class="gb-trust-bar__item">{{ block.settings.text }}</span>
+      <span class="gb-trust-bar__item gb-trust-bar__sep">·</span>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "GelBlasters — Trust Bar",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 10,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "🔫 Motor Elétrico 7.4V"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GelBlasters — Trust Bar",
+      "blocks": [
+        { "type": "item", "settings": { "text": "🔫 Motor Elétrico 7.4V" } },
+        { "type": "item", "settings": { "text": "📦 Bateria + Acessórios Incluídos" } },
+        { "type": "item", "settings": { "text": "🇵🇹 Entrega em Portugal" } },
+        { "type": "item", "settings": { "text": "💳 MB Way & Multibanco" } },
+        { "type": "item", "settings": { "text": "🎨 4 Cores à Escolha" } },
+        { "type": "item", "settings": { "text": "⚡ 55cm de Comprimento" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

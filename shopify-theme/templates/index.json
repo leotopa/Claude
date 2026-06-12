@@ -1,0 +1,158 @@
+{
+  "sections": {
+    "gb_hero": {
+      "type": "gb-hero",
+      "settings": {
+        "kicker": "Entrega em Portugal · Stock Disponível",
+        "heading": "Gel Blasters <span class=\"c\">Elétricos</span> de <span class=\"o\">Nível Pro.</span>",
+        "description": "AK47, M416 e MP5 com motor 7.4V. Bolas de gel biodegradáveis, sem dor, pura adrenalina. Perfeito para jogar com os amigos.",
+        "cta_primary_label": "Escolhe o Teu Modelo",
+        "cta_primary_url": "\/collections\/all",
+        "cta_secondary_label": "💬 Falar Connosco",
+        "cta_secondary_url": "\/pages\/contacto"
+      },
+      "blocks": {
+        "trust_1": { "type": "trust_item", "settings": { "icon": "🇵🇹", "text": "Entrega PT" } },
+        "trust_2": { "type": "trust_item", "settings": { "icon": "⚡", "text": "Motor Elétrico" } },
+        "trust_3": { "type": "trust_item", "settings": { "icon": "🔋", "text": "Bateria Incluída" } },
+        "trust_4": { "type": "trust_item", "settings": { "icon": "📦", "text": "Tudo na Caixa" } }
+      },
+      "blocks_order": ["trust_1","trust_2","trust_3","trust_4"]
+    },
+    "gb_trust_bar": {
+      "type": "gb-trust-bar",
+      "settings": {},
+      "blocks": {
+        "bar_1": { "type": "item", "settings": { "text": "🔫 Motor Elétrico 7.4V" } },
+        "bar_2": { "type": "item", "settings": { "text": "📦 Bateria + Acessórios Incluídos" } },
+        "bar_3": { "type": "item", "settings": { "text": "🇵🇹 Entrega em Portugal" } },
+        "bar_4": { "type": "item", "settings": { "text": "💳 MB Way & Multibanco" } },
+        "bar_5": { "type": "item", "settings": { "text": "🎨 4 Cores à Escolha" } },
+        "bar_6": { "type": "item", "settings": { "text": "⚡ 55cm de Comprimento" } }
+      },
+      "blocks_order": ["bar_1","bar_2","bar_3","bar_4","bar_5","bar_6"]
+    },
+    "gb_why": {
+      "type": "gb-why",
+      "settings": {
+        "label": "Porque é que toda a gente quer um?",
+        "heading": "Diversão sem limites. Seguro. Sem confusões.",
+        "subheading": "As bolas de gel dissolvem-se em contacto com a água. Sem manchas, sem limpeza. Só diversão pura com os teus amigos."
+      },
+      "blocks": {
+        "why_1": { "type": "card", "settings": { "emoji": "🎯", "title": "Precisão Real", "description": "Modo semi e automático. Alcance até 15 metros com as bolas de gel." } },
+        "why_2": { "type": "card", "settings": { "emoji": "👥", "title": "Para Grupos", "description": "Ideal para jogar em casa, jardim, ou partidas organizadas com amigos." } },
+        "why_3": { "type": "card", "settings": { "emoji": "⚡", "title": "Liga e Joga", "description": "Motor elétrico 7.4V já incluído. Carrega e está pronto em minutos." } }
+      },
+      "blocks_order": ["why_1","why_2","why_3"]
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Escolhe o Teu Blaster",
+        "heading_size": "h2",
+        "description": "Três modelos icónicos. Quatro cores. Todos incluem bateria e acessórios. Prontos para jogar.",
+        "show_description": true,
+        "description_style": "body",
+        "collection": "all",
+        "products_to_show": 3,
+        "columns_desktop": 3,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "outline",
+        "enable_desktop_slider": false,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "gb_features": {
+      "type": "gb-features",
+      "settings": {
+        "label": "O Que Inclui",
+        "heading": "Tudo Pronto para Jogar"
+      },
+      "blocks": {
+        "feat_1": { "type": "feature", "settings": { "icon": "⚡", "title": "Motor 7.4V", "description": "Motor elétrico de alta performance com modo semi e automático." } },
+        "feat_2": { "type": "feature", "settings": { "icon": "🔋", "title": "Bateria Incluída", "description": "Bateria 7.4V Li-ion e cabo de carregamento já na caixa." } },
+        "feat_3": { "type": "feature", "settings": { "icon": "🎨", "title": "4 Cores", "description": "Vermelho, azul, verde e amarelo. Escolhe a que é tua." } },
+        "feat_4": { "type": "feature", "settings": { "icon": "📏", "title": "55×30cm", "description": "Tamanho real. Peso equilibrado. Confortável para jogar horas." } },
+        "feat_5": { "type": "feature", "settings": { "icon": "💧", "title": "Bolas de Gel", "description": "Biodegradáveis. Dissolvem-se em água. Sem manchas." } },
+        "feat_6": { "type": "feature", "settings": { "icon": "📦", "title": "Kit Completo", "description": "Funil, landmine bottle e magazine incluídos." } }
+      },
+      "blocks_order": ["feat_1","feat_2","feat_3","feat_4","feat_5","feat_6"]
+    },
+    "gb_steps": {
+      "type": "gb-steps",
+      "settings": {
+        "label": "Simples e Rápido",
+        "heading": "Em 3 Passos Tens o Teu"
+      },
+      "blocks": {
+        "step_1": { "type": "step", "settings": { "title": "Escolhe o Modelo", "description": "AK47, M416 ou MP5. Seleciona a cor que gostas mais e adiciona ao carrinho." } },
+        "step_2": { "type": "step", "settings": { "title": "Preenche a Morada", "description": "Nome, morada e telefone. Paga por MB Way, Multibanco ou cartão. Seguro e rápido." } },
+        "step_3": { "type": "step", "settings": { "title": "Recebe em Casa", "description": "Entrega em Portugal continental. Já vem com tudo o que precisas para jogar." } }
+      },
+      "blocks_order": ["step_1","step_2","step_3"]
+    },
+    "gb_testimonials": {
+      "type": "gb-testimonials",
+      "settings": {
+        "label": "O Que Dizem os Clientes",
+        "heading": "Já Chegou a Portugal 🇵🇹"
+      },
+      "blocks": {
+        "rev_1": { "type": "review", "settings": { "rating": 5, "review": "Chegou em menos de uma semana. O meu filho de 15 anos ficou maluco. Motor elétrico funciona mesmo bem. Bateria dura bastante.", "name": "João M.", "meta": "Porto · AK47 Vermelho" } },
+        "rev_2": { "type": "review", "settings": { "rating": 5, "review": "Comprei o M416 para jogar com os amigos. Já tivemos 3 partidas no jardim. Sem chatices, sem limpeza. Só diversão.", "name": "Tiago F.", "meta": "Lisboa · M416 Azul" } },
+        "rev_3": { "type": "review", "settings": { "rating": 4, "review": "O MP5 é incrível. Compacto mas dispara muito bem. Paguei por MB Way e foi tudo fácil. Recomendo mesmo.", "name": "Rodrigo C.", "meta": "Braga · MP5 Verde" } }
+      },
+      "blocks_order": ["rev_1","rev_2","rev_3"]
+    },
+    "gb_faq": {
+      "type": "gb-faq",
+      "settings": {
+        "label": "Dúvidas Frequentes",
+        "heading": "Tens Perguntas?"
+      },
+      "blocks": {
+        "faq_1": { "type": "faq_item", "settings": { "question": "É seguro? Pode magoar?", "answer": "As bolas de gel têm 7-8mm e são macias. Causam uma sensação de toque ligeiro mas não magoam. Recomendamos óculos de proteção durante o jogo, especialmente para crianças mais novas." } },
+        "faq_2": { "type": "faq_item", "settings": { "question": "Quanto tempo demora a entrega em Portugal?", "answer": "A entrega demora entre 5 a 10 dias úteis para Portugal continental. Enviamos assim que o pagamento é confirmado. Recebes um email com o número de seguimento." } },
+        "faq_3": { "type": "faq_item", "settings": { "question": "O que vem na caixa?", "answer": "Todos os modelos incluem: Gel Blaster + Bateria 7.4V + Cabo carregador + Funil + Landmine bottle + Magazine. Os modelos M416 e MP5 incluem também silenciador." } },
+        "faq_4": { "type": "faq_item", "settings": { "question": "Como faço o pagamento por MB Way?", "answer": "No checkout, seleciona MB Way. Introduzes o teu número de telemóvel e recebes uma notificação na app MB Way para confirmar o pagamento. Rápido e seguro, direto do teu banco." } },
+        "faq_5": { "type": "faq_item", "settings": { "question": "Aceitam devoluções?", "answer": "Sim, tens 14 dias para devolver o produto no estado original. Se tiveres algum problema com o produto, contacta-nos primeiro via WhatsApp — resolvemos tudo rapidamente." } }
+      },
+      "blocks_order": ["faq_1","faq_2","faq_3","faq_4","faq_5"]
+    },
+    "gb_cta": {
+      "type": "gb-cta",
+      "settings": {
+        "urgency_text": "Stock Limitado — Últimas Unidades Disponíveis",
+        "heading": "Garante o Teu <span>Agora.</span>",
+        "description": "A partir de €29.99 com bateria e tudo incluído. Entrega em Portugal.",
+        "cta_primary_label": "Encomendar Agora",
+        "cta_primary_url": "\/collections\/all",
+        "cta_secondary_label": "💬 WhatsApp",
+        "cta_secondary_url": "\/pages\/contacto"
+      }
+    }
+  },
+  "order": [
+    "gb_hero",
+    "gb_trust_bar",
+    "gb_why",
+    "featured_collection",
+    "gb_features",
+    "gb_steps",
+    "gb_testimonials",
+    "gb_faq",
+    "gb_cta"
+  ]
+}
