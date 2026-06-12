@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — GelBlasters.PT</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔫</text></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">GEL<span>BLASTERS</span>.PT</a>
+    <div class="header-actions">
+      <span style="font-size:.78rem; color:var(--muted);">Painel Admin</span>
+      <button class="btn btn-ghost btn-sm" id="logout-btn">Sair</button>
+    </div>
+  </div>
+</header>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="container">
+    <div class="admin-login-wrap">
+      <div style="text-align:center; margin-bottom:32px;">
+        <div style="font-size:2rem; margin-bottom:8px;">🔒</div>
+        <h1 style="font-size:1.4rem; font-weight:900;">Acesso Restrito</h1>
+        <p style="font-size:.85rem; color:var(--muted); margin-top:8px;">Painel de administração GelBlasters.PT</p>
+      </div>
+      <div style="background:var(--card); border:1px solid var(--border); border-radius:var(--radius-card); padding:28px;">
+        <div class="form-group">
+          <label class="form-label" for="login-pass">Password</label>
+          <input class="form-input" type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <div id="login-error" style="display:none; font-size:.78rem; color:var(--secondary); margin-bottom:12px;">
+          Password incorreta
+        </div>
+        <button class="btn btn-primary btn-full" id="login-btn">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD (hidden until logged in) -->
+<div id="admin-dashboard" style="display:none;" class="admin-page">
+  <div class="container">
+
+    <!-- Stats row -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:32px;" id="stats-row">
+      <!-- filled by JS -->
+    </div>
+
+    <!-- Orders table -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+      <h2 style="font-size:1.1rem; font-weight:800;">Encomendas</h2>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <select class="form-select" id="filter-status" style="width:auto; font-size:.8rem; padding:8px 12px;">
+          <option value="">Todos os estados</option>
+          <option value="pending">Pendente</option>
+          <option value="paid">Pago</option>
+          <option value="shipped">Enviado</option>
+        </select>
+        <button class="btn btn-primary btn-sm" id="refresh-btn">↺ Atualizar</button>
+        <button class="btn btn-ghost btn-sm" id="export-btn">⬇ Exportar CSV</button>
+      </div>
+    </div>
+
+    <div class="orders-wrap">
+      <table class="orders-table" id="orders-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Data</th>
+            <th>Cliente</th>
+            <th>Contacto</th>
+            <th>Produtos</th>
+            <th>Total</th>
+            <th>Pagamento</th>
+            <th>Estado</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="orders-tbody">
+          <tr><td colspan="9" style="text-align:center; padding:40px; color:var(--muted);">A carregar...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px; font-size:.76rem; color:var(--muted);" id="orders-meta"></div>
+
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+const ADMIN_TOKEN_KEY = 'gbpt_admin_v1';
+const API = '/api';
+
+/* ---- Auth ---- */
+function isLoggedIn() {
+  return !!sessionStorage.getItem(ADMIN_TOKEN_KEY);
+}
+
+function showDashboard() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-dashboard').style.display = 'block';
+  document.getElementById('logout-btn').style.display = 'block';
+  loadOrders();
+}
+
+function showLogin() {
+  document.getElementById('login-screen').style.display = 'block';
+  document.getElementById('admin-dashboard').style.display = 'none';
+}
+
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+
+  try {
+    const res = await fetch(`${API}/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pass }),
+    });
+    const data = await res.json();
+    if (data.token) {
+      sessionStorage.setItem(ADMIN_TOKEN_KEY, data.token);
+      showDashboard();
+    } else {
+      errEl.style.display = 'block';
+    }
+  } catch {
+    errEl.style.display = 'block';
+    errEl.textContent = 'Erro de ligação ao servidor';
+  }
+});
+
+document.getElementById('login-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('login-btn').click();
+});
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+  showLogin();
+});
+
+document.getElementById('refresh-btn')?.addEventListener('click', loadOrders);
+
+/* ---- Load orders ---- */
+async function loadOrders() {
+  const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
+  const statusFilter = document.getElementById('filter-status')?.value;
+
+  try {
+    const url = `${API}/admin/orders${statusFilter ? `?status=${statusFilter}` : ''}`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+    if (res.status === 401) { showLogin(); return; }
+    const data = await res.json();
+
+    renderStats(data.stats);
+    renderOrders(data.orders);
+    document.getElementById('orders-meta').textContent =
+      `${data.orders.length} encomenda(s) · Actualizado ${new Date().toLocaleTimeString('pt-PT')}`;
+  } catch {
+    document.getElementById('orders-tbody').innerHTML =
+      `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--secondary);">Erro ao carregar encomendas</td></tr>`;
+  }
+}
+
+function renderStats(stats = {}) {
+  const items = [
+    { label: 'Total Encomendas', value: stats.total || 0, icon: '📦' },
+    { label: 'Pagas', value: stats.paid || 0, icon: '✓', color: 'var(--primary)' },
+    { label: 'Enviadas', value: stats.shipped || 0, icon: '🚚', color: '#25D366' },
+    { label: 'Receita Total', value: `€${(stats.revenue || 0).toFixed(2)}`, icon: '💶', color: 'var(--primary)' },
+  ];
+  document.getElementById('stats-row').innerHTML = items.map(s => `
+    <div style="background:var(--card); border:1px solid var(--border); border-radius:var(--radius-card); padding:20px;">
+      <div style="font-size:1.4rem; margin-bottom:6px;">${s.icon}</div>
+      <div style="font-size:1.5rem; font-weight:900; color:${s.color || '#fff'};">${s.value}</div>
+      <div style="font-size:.76rem; color:var(--muted); margin-top:4px;">${s.label}</div>
+    </div>`).join('');
+}
+
+function renderOrders(orders = []) {
+  if (!orders.length) {
+    document.getElementById('orders-tbody').innerHTML =
+      `<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--muted);">Sem encomendas</td></tr>`;
+    return;
+  }
+
+  const payLabels = { mbway:'MB Way', multibanco:'Multibanco', card:'Cartão' };
+  const statusLabels = { pending:'Pendente', paid:'Pago', shipped:'Enviado', cancelled:'Cancelado' };
+  const statusClasses = { pending:'status-pending', paid:'status-paid', shipped:'status-shipped', cancelled:'status-cancelled' };
+
+  document.getElementById('orders-tbody').innerHTML = orders.map(o => `
+    <tr>
+      <td style="color:var(--primary); font-weight:700;">#${o.orderId}</td>
+      <td>${new Date(o.createdAt).toLocaleDateString('pt-PT')}</td>
+      <td>
+        <strong>${o.customer?.nome || '—'}</strong><br>
+        <span style="color:var(--muted); font-size:.75rem;">${o.customer?.cidade || ''}</span>
+      </td>
+      <td>
+        <div style="font-size:.78rem;">${o.customer?.email || '—'}</div>
+        <div style="font-size:.78rem; color:var(--muted);">${o.customer?.telef || ''}</div>
+      </td>
+      <td style="max-width:180px;">
+        ${(o.items || []).map(i => `
+          <div style="font-size:.76rem; white-space:nowrap;">
+            ${i.sku} ×${i.qty}
+          </div>`).join('')}
+      </td>
+      <td style="color:var(--primary); font-weight:800;">€${parseFloat(o.total || 0).toFixed(2)}</td>
+      <td>${payLabels[o.payment] || o.payment || '—'}</td>
+      <td>
+        <span class="status ${statusClasses[o.status] || ''}">${statusLabels[o.status] || o.status || '—'}</span>
+      </td>
+      <td>
+        <select class="form-select" style="font-size:.72rem; padding:5px 8px; width:auto;"
+          onchange="updateStatus('${o._id || o.orderId}', this.value)">
+          <option value="">Alterar...</option>
+          <option value="pending">Pendente</option>
+          <option value="paid">Pago</option>
+          <option value="shipped">Enviado</option>
+          <option value="cancelled">Cancelado</option>
+        </select>
+      </td>
+    </tr>`).join('');
+}
+
+async function updateStatus(id, status) {
+  if (!status) return;
+  const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
+  try {
+    await fetch(`${API}/admin/orders/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ status }),
+    });
+    loadOrders();
+  } catch { showToast('Erro ao actualizar estado', true); }
+}
+
+/* ---- Export CSV ---- */
+document.getElementById('export-btn')?.addEventListener('click', async () => {
+  const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
+  const res = await fetch(`${API}/admin/orders?format=csv`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const text = await res.text();
+  const blob = new Blob([text], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `encomendas_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+});
+
+/* ---- Filter ---- */
+document.getElementById('filter-status')?.addEventListener('change', loadOrders);
+
+/* ---- Init ---- */
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('logout-btn').style.display = 'none';
+  if (isLoggedIn()) showDashboard(); else showLogin();
+});
+</script>
+</body>
+</html>

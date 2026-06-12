@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — GelBlasters.PT</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔫</text></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">GEL<span>BLASTERS</span>.PT</a>
+    <nav class="header-nav">
+      <a href="index.html#produtos">Modelos</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="contacto.html" style="color:var(--primary);">Contacto</a>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-btn" aria-label="Carrinho">
+        🛒 <span class="cart-count">0</span>
+      </button>
+      <button class="hamburger" id="menu-toggle" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="index.html#produtos">Modelos</a>
+  <a href="index.html#faq">FAQ</a>
+  <a href="contacto.html">Contacto</a>
+  <a href="carrinho.html" style="color:var(--primary)">🛒 Carrinho</a>
+</nav>
+
+<main class="contact-page">
+  <div class="container">
+
+    <div class="breadcrumb">
+      <a href="index.html">Início</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Contacto</span>
+    </div>
+
+    <div class="contact-grid">
+      <!-- Left: Info -->
+      <div class="contact-info">
+        <div class="section-label">Estamos Aqui para Ajudar</div>
+        <h1>Fala Connosco<span style="color:var(--primary);">.</span></h1>
+        <p>
+          Tens dúvidas sobre os modelos, encomendas, envios ou qualquer outra coisa?
+          A forma mais rápida de nos contactar é pelo WhatsApp — respondemos normalmente em menos de 1 hora.
+        </p>
+
+        <!-- WhatsApp primary CTA -->
+        <a href="https://wa.me/351XXXXXXXXX?text=Olá!%20Tenho%20uma%20questão%20sobre%20os%20Gel%20Blasters."
+           class="whatsapp-btn" target="_blank" rel="noopener" id="wa-contact-btn">
+          💬 Enviar mensagem no WhatsApp
+        </a>
+
+        <!-- Contact cards -->
+        <div style="margin-top:32px;">
+          <div class="contact-card">
+            <div class="contact-card-icon">📱</div>
+            <div>
+              <div class="contact-card-label">WhatsApp</div>
+              <div class="contact-card-value" id="wa-number">+351 XXX XXX XXX</div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">✉️</div>
+            <div>
+              <div class="contact-card-label">Email</div>
+              <div class="contact-card-value">geral@gelblasters.pt</div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">🕐</div>
+            <div>
+              <div class="contact-card-label">Horário de Resposta</div>
+              <div class="contact-card-value">Seg–Dom · 09h–22h</div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">🇵🇹</div>
+            <div>
+              <div class="contact-card-label">Entregas</div>
+              <div class="contact-card-value">Portugal Continental</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Contact form -->
+      <div>
+        <div style="background:var(--card); border:1px solid var(--border); border-radius:var(--radius-card); padding:32px;">
+          <div style="font-size:1rem; font-weight:800; color:#fff; margin-bottom:24px;">
+            Enviar Mensagem
+          </div>
+
+          <form id="contact-form">
+            <div class="form-group">
+              <label class="form-label" for="c-nome">Nome</label>
+              <input class="form-input" type="text" id="c-nome" placeholder="O teu nome" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="c-email">Email</label>
+              <input class="form-input" type="email" id="c-email" placeholder="email@exemplo.pt" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="c-assunto">Assunto</label>
+              <select class="form-select" id="c-assunto">
+                <option value="">Seleciona o assunto...</option>
+                <option value="encomenda">Dúvida sobre encomenda</option>
+                <option value="produto">Informação sobre produto</option>
+                <option value="envio">Estado do envio</option>
+                <option value="devolucao">Devolução / Troca</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="c-msg">Mensagem</label>
+              <textarea class="form-input" id="c-msg" rows="5"
+                placeholder="Escreve a tua mensagem aqui..."
+                required
+                style="resize:vertical; min-height:120px;"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="contact-submit">
+              Enviar Mensagem
+            </button>
+
+            <div id="contact-success" style="display:none; margin-top:16px; text-align:center; padding:16px; background:rgba(0,229,255,.08); border:1px solid var(--primary); border-radius:8px; font-size:.88rem; color:var(--primary); font-weight:600;">
+              ✓ Mensagem enviada! Respondemos em breve.
+            </div>
+            <div id="contact-error" style="display:none; margin-top:16px; text-align:center; padding:16px; background:rgba(255,61,0,.08); border:1px solid var(--secondary); border-radius:8px; font-size:.88rem; color:var(--secondary); font-weight:600;">
+              ⚠️ Erro ao enviar. Tenta via WhatsApp.
+            </div>
+          </form>
+        </div>
+
+        <!-- FAQ quick links -->
+        <div style="margin-top:24px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius-card); padding:24px;">
+          <div style="font-size:.82rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:14px;">
+            Perguntas Frequentes
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <a href="index.html#faq" style="font-size:.85rem; color:var(--text); display:flex; justify-content:space-between; align-items:center;">
+              Quanto tempo demora a entrega? <span style="color:var(--primary);">›</span>
+            </a>
+            <a href="index.html#faq" style="font-size:.85rem; color:var(--text); display:flex; justify-content:space-between; align-items:center;">
+              Como pago por MB Way? <span style="color:var(--primary);">›</span>
+            </a>
+            <a href="index.html#faq" style="font-size:.85rem; color:var(--text); display:flex; justify-content:space-between; align-items:center;">
+              O que vem incluído na caixa? <span style="color:var(--primary);">›</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer" style="padding:32px 0;">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <a href="index.html" class="logo">GEL<span>BLASTERS</span>.PT</a>
+      <div class="footer-copy">© 2025 GelBlasters.PT</div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+const WA_NUMBER = '+351XXXXXXXXX'; // substituir pelo número real
+
+document.getElementById('wa-contact-btn').href =
+  `https://wa.me/${WA_NUMBER.replace(/\D/g,'')}?text=${encodeURIComponent('Olá! Tenho uma questão sobre os Gel Blasters.')}`;
+document.getElementById('wa-number').textContent = WA_NUMBER;
+
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('contact-submit');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> A enviar...';
+
+  const payload = {
+    nome:    document.getElementById('c-nome').value,
+    email:   document.getElementById('c-email').value,
+    assunto: document.getElementById('c-assunto').value,
+    msg:     document.getElementById('c-msg').value,
+  };
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error();
+    document.getElementById('contact-success').style.display = 'block';
+    document.getElementById('contact-form').reset();
+  } catch {
+    document.getElementById('contact-error').style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Enviar Mensagem';
+  }
+});
+</script>
+</body>
+</html>

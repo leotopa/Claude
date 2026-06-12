@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Gel Blaster — GelBlasters.PT</title>
+  <meta name="description" id="page-desc" content="Gel Blaster com motor 7.4V. Bateria e acessórios incluídos. Entrega em Portugal.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔫</text></svg>">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">GEL<span>BLASTERS</span>.PT</a>
+    <nav class="header-nav">
+      <a href="index.html#produtos">Modelos</a>
+      <a href="index.html#como-funciona">Como Funciona</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-btn" aria-label="Carrinho">
+        🛒 <span class="cart-count">0</span>
+      </button>
+      <button class="hamburger" id="menu-toggle" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="index.html#produtos">Modelos</a>
+  <a href="index.html#como-funciona">Como Funciona</a>
+  <a href="index.html#faq">FAQ</a>
+  <a href="contacto.html">Contacto</a>
+  <a href="carrinho.html" style="color:var(--primary)">🛒 Carrinho</a>
+</nav>
+
+<!-- PRODUCT PAGE -->
+<main class="product-page">
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="index.html">Início</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="index.html#produtos">Modelos</a>
+      <span class="breadcrumb-sep">›</span>
+      <span id="breadcrumb-name">Carregando...</span>
+    </div>
+
+    <div class="product-page-grid">
+      <!-- Gallery -->
+      <div class="product-gallery">
+        <div class="product-gallery-main" id="product-img-wrap">
+          <img id="product-main-img" src="" alt="" loading="eager">
+        </div>
+        <!-- Model switcher chips -->
+        <div style="display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;" id="model-chips"></div>
+      </div>
+
+      <!-- Info -->
+      <div class="product-info">
+        <div class="product-info-header">
+          <span id="product-badge" class="badge badge-hot" style="margin-bottom:8px;">Mais Vendido</span>
+          <h1 id="product-name">Carregando...</h1>
+          <span class="model-badge" id="product-sku">SKU: —</span>
+        </div>
+
+        <div class="price-block">
+          <span class="price-main" id="product-price">€29.99</span>
+          <span class="price-old" id="product-price-old">€39.99</span>
+          <span class="price-save">-25%</span>
+          <div style="font-size:.78rem; color:var(--muted); margin-top:8px;">
+            ✓ IVA incluído &nbsp;·&nbsp; ✓ Envio para Portugal
+          </div>
+        </div>
+
+        <!-- Color selector -->
+        <div class="option-block">
+          <div class="option-heading">
+            Cor: <span class="selected-label" id="selected-color-name">—</span>
+          </div>
+          <div class="color-swatches" id="color-swatches"></div>
+        </div>
+
+        <!-- Quantity -->
+        <div class="option-block">
+          <div class="option-heading">Quantidade:</div>
+          <div class="qty-control">
+            <button class="qty-btn" id="qty-minus">−</button>
+            <div class="qty-num" id="qty-display">1</div>
+            <button class="qty-btn" id="qty-plus">+</button>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="product-actions">
+          <button class="btn btn-primary btn-lg" id="add-to-cart-btn" style="flex:1;">
+            🛒 Adicionar ao Carrinho
+          </button>
+          <a href="carrinho.html" class="btn btn-secondary btn-lg" id="buy-now-btn" style="flex:1;">
+            Encomendar Agora
+          </a>
+        </div>
+
+        <!-- Trust row -->
+        <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+          <div class="trust-item"><span class="t-icon">🇵🇹</span> Entrega PT</div>
+          <div class="trust-item"><span class="t-icon">💳</span> MB Way / Multibanco</div>
+          <div class="trust-item"><span class="t-icon">↩</span> 14 dias devolução</div>
+          <div class="trust-item"><span class="t-icon">📦</span> Tudo incluído</div>
+        </div>
+
+        <!-- Includes -->
+        <div class="includes-box">
+          <h4>O que está incluído</h4>
+          <ul class="includes-list" id="includes-list"></ul>
+        </div>
+
+        <!-- Description -->
+        <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+          <p style="font-size:.88rem; color:var(--muted); line-height:1.7;" id="product-desc-full"></p>
+          <p style="font-size:.82rem; color:var(--muted); margin-top:12px;">
+            <strong style="color:var(--text);">Dimensões:</strong> 55×30cm &nbsp;·&nbsp;
+            <strong style="color:var(--text);">Motor:</strong> 7.4V &nbsp;·&nbsp;
+            <strong style="color:var(--text);">Modos:</strong> Semi-automático / Automático
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other models -->
+    <div style="margin-top:64px;">
+      <h3 style="font-size:1.2rem; font-weight:800; margin-bottom:24px;">Outros Modelos</h3>
+      <div class="products-grid" id="other-products"></div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Mobile sticky CTA -->
+<div class="sticky-add-cart" id="sticky-cta">
+  <button class="btn btn-primary btn-full" id="sticky-add-btn">🛒 Adicionar ao Carrinho</button>
+  <a href="carrinho.html" class="btn btn-secondary" id="sticky-buy-btn" style="white-space:nowrap;">Ver Carrinho</a>
+</div>
+
+<footer class="footer" style="padding:32px 0;">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <a href="index.html" class="logo">GEL<span>BLASTERS</span>.PT</a>
+      <div class="footer-copy">© 2025 GelBlasters.PT</div>
+      <div class="payment-badges">
+        <span class="payment-badge">MB WAY</span>
+        <span class="payment-badge">MULTIBANCO</span>
+        <span class="payment-badge">VISA</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+(function() {
+  /* Determine product from URL */
+  const params = new URLSearchParams(location.search);
+  let modelId = params.get('modelo') || 'ak47';
+  if (!PRODUCTS[modelId]) modelId = 'ak47';
+
+  let selectedColor = PRODUCTS[modelId].colors[0];
+  let qty = 1;
+
+  function renderProduct(id) {
+    const p = PRODUCTS[id];
+    if (!p) return;
+
+    document.getElementById('page-title').textContent = `${p.name} — GelBlasters.PT`;
+    document.getElementById('page-desc').setAttribute('content', p.desc);
+    document.getElementById('breadcrumb-name').textContent = p.name;
+    document.getElementById('product-name').textContent = p.name;
+    document.getElementById('product-sku').textContent = `SKU: ${p.sku}${selectedColor}`;
+    document.getElementById('product-main-img').src = p.img;
+    document.getElementById('product-main-img').alt = p.name;
+    document.getElementById('product-price').textContent = `€${p.price.toFixed(2)}`;
+    document.getElementById('product-price-old').textContent = `€${p.priceOld.toFixed(2)}`;
+    document.getElementById('product-desc-full').textContent = p.desc;
+
+    // Includes
+    const incList = document.getElementById('includes-list');
+    incList.innerHTML = p.includes.map(i => `<li>${i}</li>`).join('');
+
+    // Color swatches
+    const swatchWrap = document.getElementById('color-swatches');
+    swatchWrap.innerHTML = p.colors.map(code => {
+      const c = COLORS[code];
+      return `<button class="color-swatch${code === selectedColor ? ' active' : ''}"
+        style="background:${c.hex};"
+        data-color="${code}"
+        title="${c.name}"
+        aria-label="${c.name}"></button>`;
+    }).join('');
+
+    swatchWrap.querySelectorAll('.color-swatch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedColor = btn.dataset.color;
+        swatchWrap.querySelectorAll('.color-swatch').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('selected-color-name').textContent = COLORS[selectedColor].name;
+        document.getElementById('product-sku').textContent = `SKU: ${p.sku}${selectedColor}`;
+      });
+    });
+
+    document.getElementById('selected-color-name').textContent = COLORS[selectedColor].name;
+
+    // Model chips
+    const chipsWrap = document.getElementById('model-chips');
+    chipsWrap.innerHTML = Object.values(PRODUCTS).map(pr =>
+      `<a href="produto.html?modelo=${pr.id}"
+          class="btn btn-sm ${pr.id === id ? 'btn-primary' : 'btn-ghost'}"
+          style="font-size:.73rem;">${pr.name.replace(' Gel Blaster','')}</a>`
+    ).join('');
+
+    // Badge
+    const badge = document.getElementById('product-badge');
+    if (id === 'ak47') { badge.className = 'badge badge-hot'; badge.textContent = 'Mais Vendido'; }
+    else if (id === 'm416') { badge.className = 'badge badge-new'; badge.textContent = 'Novo'; }
+    else { badge.className = 'badge badge-stock'; badge.textContent = 'Stock Limitado'; }
+
+    // Other products
+    const others = document.getElementById('other-products');
+    others.innerHTML = Object.values(PRODUCTS).filter(pr => pr.id !== id).map(pr => `
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="${pr.img}" alt="${pr.name}" loading="lazy">
+        </div>
+        <div class="product-body">
+          <div class="product-name">${pr.name}</div>
+          <div class="product-desc">${pr.desc}</div>
+          <div class="product-price-row">
+            <span class="product-price">€${pr.price.toFixed(2)}</span>
+            <a href="produto.html?modelo=${pr.id}" class="btn btn-primary btn-sm">Ver</a>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function updateQtyDisplay() {
+    document.getElementById('qty-display').textContent = qty;
+  }
+
+  document.getElementById('qty-minus').addEventListener('click', () => {
+    if (qty > 1) { qty--; updateQtyDisplay(); }
+  });
+  document.getElementById('qty-plus').addEventListener('click', () => {
+    if (qty < 10) { qty++; updateQtyDisplay(); }
+  });
+
+  function handleAddToCart() {
+    addToCart(modelId, selectedColor, qty);
+    const btn = document.getElementById('add-to-cart-btn');
+    btn.textContent = '✓ Adicionado!';
+    btn.style.background = '#1fb85c';
+    setTimeout(() => {
+      btn.textContent = '🛒 Adicionar ao Carrinho';
+      btn.style.background = '';
+    }, 2000);
+  }
+
+  document.getElementById('add-to-cart-btn').addEventListener('click', handleAddToCart);
+  document.getElementById('sticky-add-btn').addEventListener('click', handleAddToCart);
+
+  document.getElementById('buy-now-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    addToCart(modelId, selectedColor, qty);
+    window.location.href = 'carrinho.html';
+  });
+  document.getElementById('sticky-buy-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'carrinho.html';
+  });
+
+  renderProduct(modelId);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encomenda Confirmada — GelBlasters.PT</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔫</text></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">GEL<span>BLASTERS</span>.PT</a>
+    <div class="header-actions">
+      <a href="index.html" class="btn btn-ghost btn-sm">← Início</a>
+    </div>
+  </div>
+</header>
+
+<main class="confirmation-wrap">
+  <div class="container">
+    <div class="confirmation-box">
+
+      <div class="confirm-icon">✓</div>
+
+      <h1 style="font-size:1.6rem; font-weight:900; margin-bottom:8px;">Encomenda Confirmada!</h1>
+      <p style="font-size:.9rem; color:var(--muted);">
+        Obrigado pela tua compra. Vais receber um email de confirmação em breve.
+      </p>
+
+      <div class="confirm-order-num" id="confirm-order-num">
+        #GBP-000000
+      </div>
+
+      <!-- Payment instructions (conditional) -->
+      <div id="payment-instructions" style="display:none; margin-top:20px; padding:20px; background:var(--navy); border:1px solid var(--primary); border-radius:var(--radius-card); text-align:left; font-size:.85rem;">
+        <!-- filled by JS -->
+      </div>
+
+      <!-- Order details -->
+      <div class="confirm-details" id="confirm-details">
+        <!-- filled by JS -->
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:28px;">
+        <a href="index.html" class="btn btn-primary btn-full">Ver Mais Modelos</a>
+        <a href="contacto.html" class="btn btn-ghost btn-full">💬 Falar Connosco</a>
+      </div>
+
+      <div style="margin-top:20px; font-size:.76rem; color:var(--muted); line-height:1.6;">
+        Dúvidas sobre a tua encomenda?<br>
+        Entra em contacto via WhatsApp ou email — respondemos em menos de 24h.
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let order;
+  try {
+    order = JSON.parse(sessionStorage.getItem('gbpt_order') || '{}');
+  } catch { order = {}; }
+
+  if (!order.orderId) {
+    // No order data — redirect to home
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Order number
+  document.getElementById('confirm-order-num').textContent = `#${order.orderId}`;
+
+  // Payment instructions
+  const instrWrap = document.getElementById('payment-instructions');
+  if (order.payment === 'multibanco' && order.mbEntity && order.mbRef) {
+    instrWrap.style.display = 'block';
+    instrWrap.innerHTML = `
+      <div style="font-weight:800; color:var(--primary); margin-bottom:12px; font-size:.9rem;">
+        🏦 Referência Multibanco
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between;">
+          <span style="color:var(--muted);">Entidade</span>
+          <strong>${order.mbEntity}</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between;">
+          <span style="color:var(--muted);">Referência</span>
+          <strong style="letter-spacing:.05em;">${order.mbRef}</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between;">
+          <span style="color:var(--muted);">Valor</span>
+          <strong style="color:var(--primary);">€${order.total?.toFixed(2)}</strong>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:.76rem; color:var(--muted);">
+        Paga no MB, home banking ou ATM. A encomenda é processada assim que o pagamento for confirmado.
+      </div>`;
+  } else if (order.payment === 'mbway') {
+    instrWrap.style.display = 'block';
+    instrWrap.innerHTML = `
+      <div style="font-weight:800; color:var(--primary); margin-bottom:8px; font-size:.9rem;">
+        📱 MB Way — Ação Necessária
+      </div>
+      <div style="font-size:.83rem; color:var(--muted); line-height:1.6;">
+        Enviámos uma notificação para o teu telemóvel.<br>
+        Abre a app MB Way e <strong style="color:var(--text);">confirma o pagamento de €${order.total?.toFixed(2)}</strong>.<br>
+        A encomenda é processada imediatamente após confirmação.
+      </div>`;
+  }
+
+  // Order details
+  const detailsWrap = document.getElementById('confirm-details');
+  detailsWrap.innerHTML = `
+    <div class="confirm-row"><span>Email</span><span>${order.email || '—'}</span></div>
+    <div class="confirm-row"><span>Nome</span><span>${order.nome || '—'}</span></div>
+    <div class="confirm-row"><span>Total</span><span style="color:var(--primary); font-size:1rem;">€${order.total?.toFixed(2) || '0.00'}</span></div>
+    <div class="confirm-row"><span>Pagamento</span><span>${{mbway:'MB Way',multibanco:'Multibanco',card:'Cartão'}[order.payment] || order.payment || '—'}</span></div>
+    <div class="confirm-row"><span>Entrega</span><span>5–10 dias úteis</span></div>
+  `;
+
+  // Clean session storage
+  sessionStorage.removeItem('gbpt_order');
+});
+</script>
+</body>
+</html>

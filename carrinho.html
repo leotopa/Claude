@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho — GelBlasters.PT</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔫</text></svg>">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">GEL<span>BLASTERS</span>.PT</a>
+    <nav class="header-nav">
+      <a href="index.html#produtos">Modelos</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-btn" aria-label="Carrinho">
+        🛒 <span class="cart-count">0</span>
+      </button>
+      <button class="hamburger" id="menu-toggle" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobile-menu">
+  <a href="index.html#produtos">Modelos</a>
+  <a href="contacto.html">Contacto</a>
+</nav>
+
+<!-- CART PAGE -->
+<main class="cart-page">
+  <div class="container">
+    <div style="margin-bottom:32px;">
+      <h1 style="font-size:1.8rem; font-weight:900;">Carrinho</h1>
+      <div style="font-size:.85rem; color:var(--muted); margin-top:4px;">
+        Confirma os artigos antes de finalizar a encomenda.
+      </div>
+    </div>
+
+    <div class="cart-layout">
+
+      <!-- Cart items + checkout form -->
+      <div>
+        <!-- Cart items list -->
+        <div class="cart-items-list" id="cart-items">
+          <div style="text-align:center; padding:40px; color:var(--muted); font-size:.88rem;">
+            A carregar...
+          </div>
+        </div>
+
+        <!-- Checkout form (shown when cart has items) -->
+        <div class="checkout-form-section" id="checkout-form-wrap">
+          <div class="checkout-form-title">Dados de Entrega</div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="field-nome">Nome Completo *</label>
+              <input class="form-input" type="text" id="field-nome" placeholder="O teu nome completo" autocomplete="name">
+              <span class="form-error">Nome obrigatório</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-email">Email *</label>
+              <input class="form-input" type="email" id="field-email" placeholder="email@exemplo.pt" autocomplete="email">
+              <span class="form-error">Email inválido</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="field-morada">Morada *</label>
+            <input class="form-input" type="text" id="field-morada" placeholder="Rua, nº, andar..." autocomplete="street-address">
+            <span class="form-error">Morada obrigatória</span>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="field-cidade">Cidade *</label>
+              <input class="form-input" type="text" id="field-cidade" placeholder="Lisboa" autocomplete="address-level2">
+              <span class="form-error">Cidade obrigatória</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-cp">Código Postal *</label>
+              <input class="form-input" type="text" id="field-cp" placeholder="0000-000" maxlength="8" autocomplete="postal-code">
+              <span class="form-error">Formato: 0000-000</span>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="field-telef">Telemóvel *</label>
+              <input class="form-input" type="tel" id="field-telef" placeholder="9XXXXXXXX" autocomplete="tel">
+              <span class="form-error">Número PT inválido</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="field-nif">NIF <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+              <input class="form-input" type="text" id="field-nif" placeholder="123456789" maxlength="9">
+            </div>
+          </div>
+
+          <!-- Observations -->
+          <div class="form-group">
+            <label class="form-label" for="field-obs">Observações</label>
+            <input class="form-input" type="text" id="field-obs" placeholder="Instrução especial para entrega, referência de portão...">
+          </div>
+
+          <!-- Payment method -->
+          <div style="margin-bottom:16px;">
+            <div class="form-label" style="margin-bottom:10px;">Método de Pagamento *</div>
+            <div class="payment-methods">
+              <label class="payment-option">
+                <input type="radio" name="payment" value="mbway" checked>
+                <div class="payment-option-info">
+                  <div class="payment-option-name">📱 MB Way</div>
+                  <div class="payment-option-sub">Notificação imediata na tua app bancária</div>
+                </div>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment" value="multibanco">
+                <div class="payment-option-info">
+                  <div class="payment-option-name">🏦 Referência Multibanco</div>
+                  <div class="payment-option-sub">Paga no MB, home banking ou ATM</div>
+                </div>
+              </label>
+              <label class="payment-option">
+                <input type="radio" name="payment" value="card">
+                <div class="payment-option-info">
+                  <div class="payment-option-name">💳 Cartão (Visa / Mastercard)</div>
+                  <div class="payment-option-sub">Pagamento seguro por Stripe</div>
+                </div>
+              </label>
+            </div>
+            <div id="payment-error" style="display:none; font-size:.73rem; color:var(--secondary); margin-top:6px;">
+              Escolhe um método de pagamento
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:20px;">
+            <input type="checkbox" id="terms-check" style="margin-top:3px; accent-color:var(--primary); flex-shrink:0;" required>
+            <label for="terms-check" style="font-size:.8rem; color:var(--muted); line-height:1.5; cursor:pointer;">
+              Confirmo que li e aceito os
+              <a href="#" style="color:var(--primary);">Termos e Condições</a> e a
+              <a href="#" style="color:var(--primary);">Política de Privacidade</a>.
+            </label>
+          </div>
+
+          <button class="btn btn-primary btn-lg btn-full" id="checkout-submit" disabled>
+            🔒 Finalizar Encomenda
+          </button>
+
+          <!-- WhatsApp alternative -->
+          <div class="whatsapp-alt">
+            Preferes encomendar pelo WhatsApp?
+            <a href="#" id="whatsapp-order"> Clica aqui e enviamos o teu pedido automaticamente ›</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary sidebar -->
+      <div>
+        <div class="cart-summary-box">
+          <div class="summary-head">Resumo da Encomenda</div>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="summary-subtotal">€0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Envio</span>
+            <span id="summary-shipping" style="color:var(--primary);">Grátis</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="summary-total">€0.00</span>
+          </div>
+
+          <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+            <div style="font-size:.75rem; color:var(--muted); line-height:1.6;">
+              ✓ Envio gratuito para Portugal continental<br>
+              ✓ Entrega em 5–10 dias úteis<br>
+              ✓ 14 dias para devolver
+            </div>
+          </div>
+        </div>
+
+        <!-- Need help? -->
+        <div style="margin-top:16px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius-card); padding:20px; text-align:center;">
+          <div style="font-size:.82rem; color:var(--muted); margin-bottom:12px;">Precisas de ajuda?</div>
+          <a href="contacto.html" class="whatsapp-btn" style="font-size:.85rem; padding:12px 20px; display:inline-flex;">
+            💬 WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="footer" style="padding:32px 0;">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <a href="index.html" class="logo">GEL<span>BLASTERS</span>.PT</a>
+      <div class="footer-copy">© 2025 GelBlasters.PT</div>
+      <div class="payment-badges">
+        <span class="payment-badge">MB WAY</span>
+        <span class="payment-badge">MULTIBANCO</span>
+        <span class="payment-badge">VISA</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+<script src="js/checkout.js"></script>
+<script>
+// Show/hide checkout form based on cart state
+const observer = new MutationObserver(() => {
+  const hasItems = cart && cart.length > 0;
+  const formWrap = document.getElementById('checkout-form-wrap');
+  if (formWrap) formWrap.style.display = hasItems ? 'block' : 'none';
+  const submitBtn = document.getElementById('checkout-submit');
+  if (submitBtn) {
+    submitBtn.disabled = !hasItems;
+    // Enable only after terms checked
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const formWrap = document.getElementById('checkout-form-wrap');
+  const submitBtn = document.getElementById('checkout-submit');
+
+  function toggleCheckoutBtn() {
+    const hasItems = cart && cart.length > 0;
+    const termsOk = document.getElementById('terms-check')?.checked;
+    if (submitBtn) submitBtn.disabled = !(hasItems && termsOk);
+  }
+
+  document.getElementById('terms-check')?.addEventListener('change', toggleCheckoutBtn);
+
+  // Render initially
+  renderCartItems();
+  const hasItems = cart && cart.length > 0;
+  if (formWrap) formWrap.style.display = hasItems ? 'block' : 'none';
+  toggleCheckoutBtn();
+
+  // Watch for cart changes
+  const origRender = window.renderCartItems;
+  window.renderCartItems = function() {
+    origRender && origRender();
+    const hi = cart && cart.length > 0;
+    if (formWrap) formWrap.style.display = hi ? 'block' : 'none';
+    toggleCheckoutBtn();
+  };
+});
+</script>
+</body>
+</html>
