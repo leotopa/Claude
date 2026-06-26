@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { stripe } from '@/lib/stripe'
+import { getServerStripe } from '@/lib/stripe'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -36,7 +36,7 @@ export async function POST(
 
     const amountCents = Math.round(amount * 100)
 
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await getServerStripe().paymentIntents.create({
       amount: amountCents,
       currency: 'eur',
       metadata: {
