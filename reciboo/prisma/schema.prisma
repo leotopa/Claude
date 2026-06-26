@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CLIENT
+  ESTABLISHMENT
+}
+
+enum SubscriptionPlan {
+  STARTER
+  GROWTH
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  TRIAL
+  CANCELLED
+}
+
+enum ReceiptStatus {
+  OPEN
+  SPLIT_IN_PROGRESS
+  CLOSED
+}
+
+enum SplitGroupStatus {
+  COLLECTING
+  COMPLETED
+}
+
+enum SplitMemberStatus {
+  PENDING
+  PAID
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      UserRole
+  createdAt DateTime @default(now())
+
+  establishment Establishment?
+  receipts      Receipt[]        @relation("ClientReceipts")
+  splitGroups   SplitGroup[]     @relation("HostSplitGroups")
+}
+
+model Establishment {
+  id                  String             @id @default(cuid())
+  userId              String             @unique
+  name                String
+  address             String
+  nfcDeviceId         String?
+  subscriptionPlan    SubscriptionPlan   @default(STARTER)
+  subscriptionStatus  SubscriptionStatus @default(TRIAL)
+  monthlyReceiptCount Int                @default(0)
+  createdAt           DateTime           @default(now())
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  receipts Receipt[]
+}
+
+model Receipt {
+  id               String        @id @default(cuid())
+  establishmentId  String
+  clientId         String?
+  totalAmount      Float
+  subtotal         Float
+  tax              Float
+  gratuity         Float         @default(0)
+  items            Json
+  date             DateTime      @default(now())
+  status           ReceiptStatus @default(OPEN)
+  nfcTransactionId String?
+  qrCode           String?
+  createdAt        DateTime      @default(now())
+
+  establishment Establishment @relation(fields: [establishmentId], references: [id], onDelete: Cascade)
+  client        User?         @relation("ClientReceipts", fields: [clientId], references: [id])
+  receiptItems  ReceiptItem[]
+  splitGroup    SplitGroup?
+}
+
+model ReceiptItem {
+  id        String @id @default(cuid())
+  receiptId String
+  name      String
+  price     Float
+  quantity  Int    @default(1)
+
+  receipt Receipt @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+}
+
+model SplitGroup {
+  id              String           @id @default(cuid())
+  receiptId       String           @unique
+  hostUserId      String
+  totalAmount     Float
+  amountCollected Float            @default(0)
+  status          SplitGroupStatus @default(COLLECTING)
+  shareCode       String           @unique
+  createdAt       DateTime         @default(now())
+
+  receipt      Receipt       @relation(fields: [receiptId], references: [id], onDelete: Cascade)
+  host         User          @relation("HostSplitGroups", fields: [hostUserId], references: [id])
+  splitMembers SplitMember[]
+}
+
+model SplitMember {
+  id                   String            @id @default(cuid())
+  splitGroupId         String
+  name                 String
+  email                String?
+  amountOwed           Float
+  amountPaid           Float             @default(0)
+  status               SplitMemberStatus @default(PENDING)
+  paymentMethod        String?
+  paidAt               DateTime?
+  stripePaymentIntentId String?
+  selectedItems        Json?
+
+  splitGroup SplitGroup @relation(fields: [splitGroupId], references: [id], onDelete: Cascade)
+}
