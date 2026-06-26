@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createServerSupabase } from '@/lib/supabase'
+import { createServerSupabase } from '@/lib/supabase-server'
 import { prisma } from '@/lib/prisma'
 import { generateShareCode } from '@/lib/utils'
 import { z } from 'zod'
