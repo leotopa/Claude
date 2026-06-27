@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createBrowserSupabase } from '@/lib/supabase'
@@ -8,9 +8,11 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Receipt, User, Mail, Lock, Store, Smartphone, AlertCircle } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 type Role = 'CLIENT' | 'ESTABLISHMENT'
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter()
   const params = useSearchParams()
   const [role, setRole] = useState<Role>((params.get('role') as Role) || 'CLIENT')
@@ -221,5 +223,13 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-reciboo-dark" />}>
+      <RegisterForm />
+    </Suspense>
   )
 }
